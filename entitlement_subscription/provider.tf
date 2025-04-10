@@ -7,5 +7,5 @@ terraform {
   }
 }
 provider "btp" {
-  globalaccount = "979d0ad5trial-ga"
+  globalaccount = "ZZZ"
 }
