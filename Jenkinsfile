@@ -14,7 +14,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                 dockerImage: 'ghcr.io/opentofu/opentofu:latest',
                 dockerWorkspace: './entitlement_subscription'
             ) {
-                sh 'version'
+                sh 'tofu -version'
             }
 
         }
