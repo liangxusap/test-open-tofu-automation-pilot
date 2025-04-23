@@ -1,6 +1,8 @@
 podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-feature-branch',
             label: 'test-open-tofu-github-pipeline-feature-branch-label', serviceAccount: 'jenkins-pipeline-sa-by-liangxu', 
-            containers: [containerTemplate(name:'jnlp', image:'jenkins/inbound-agent')]) {
+            agentContainer: 'dind',
+            agentInjection: true,
+            containers: [containerTemplate(name:'dind', image:'docker:dind')]) {
     node('test-open-tofu-github-pipeline-feature-branch-label') {
         stage('Init'){
             cleanWs()
