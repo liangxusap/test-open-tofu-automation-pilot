@@ -3,7 +3,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
             agentContainer: 'jnlp',
             agentInjection: true,
             containers: [containerTemplate(name:'jnlp', image:'jenkins/inbound-agent'),
-                         containerTemplate(name:'dind', image:'docker:dind')]) {
+                         containerTemplate(name:'dind', image:'docker')]) {
     node('test-open-tofu-github-pipeline-feature-branch-label') {
         stage('Init'){
             cleanWs()
