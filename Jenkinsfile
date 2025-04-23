@@ -1,6 +1,6 @@
 podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-feature-branch',
             label: 'test-open-tofu-github-pipeline-feature-branch-label', serviceAccount: 'jenkins-pipeline-sa-by-liangxu', 
-            agentContainer: 'jnlp'
+            agentContainer: 'jnlp',
             containers: [containerTemplate(name:'jnlp', image:'jenkins/inbound-agent'),
                          containerTemplate(name:'opentofu', image: 'ghcr.io/opentofu/opentofu:latest')]) {
     node('test-open-tofu-github-pipeline-feature-branch-label') {
