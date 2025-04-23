@@ -1,24 +1,15 @@
 podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-feature-branch',
             label: 'test-open-tofu-github-pipeline-feature-branch-label', serviceAccount: 'jenkins-pipeline-sa-by-liangxu', 
-            agentContainer: 'jnlp',
-            agentInjection: true,
-            containers: [containerTemplate(name:'jnlp', image:'jenkins/inbound-agent'),
-                         containerTemplate(name:'opentofu', image:'ghcr.io/opentofu/opentofu:latest')]) {
+            containers: [containerTemplate(name:'jnlp', image:'jenkins/inbound-agent')]) {
     node('test-open-tofu-github-pipeline-feature-branch-label') {
         stage('Init'){
             cleanWs()
             checkout scm
         }
         stage('tofu actions') {
-            container('opentofu'){
-                sh """
-                    pwd
-                    ls -ltra
-                    cat /etc/os-release
-                    tofu -version
-                """
+            docker.image('ghcr.io/opentofu/opentofu:latest').inside('-v $WORKSPACE:./entitlement_subscription -w ./entitlement_subscription') {
+                sh 'version'
             }
-
         }
         // stage('tofu-plan') {
         //     sh """
