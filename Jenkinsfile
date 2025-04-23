@@ -6,5 +6,11 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
             cleanWs()
             checkout scm
         }
+        stage('Terraform-plan-script') {
+            sh """
+                pwd
+                ls -ltra
+            """
+        }
     }
 }
