@@ -15,7 +15,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                 dockerWorkspace: './entitlement_subscription'
             ) {
                 sh '''
-                    tofu -init
+                    tofu init
                     tofu plan
                 '''
             }
