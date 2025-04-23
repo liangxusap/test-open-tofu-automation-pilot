@@ -8,8 +8,15 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
             checkout scm
             setupCommonPipelineEnvironment script:this
         }
-        // stage('open tofu actions') {
+        stage('open tofu actions') {
+            dockerExecute(
+                script: script,
+                dockerImage: 'ghcr.io/opentofu/opentofu:latest',
+                dockerWorkspace: './entitlement_subscription'
+            ) {
+                sh 'version'
+            }
 
-        // }
+        }
     }
 }
