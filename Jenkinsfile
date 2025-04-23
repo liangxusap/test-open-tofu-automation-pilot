@@ -10,6 +10,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
             sh """
                 pwd
                 ls -ltra
+                cat /etc/os-release
             """
         }
     }
