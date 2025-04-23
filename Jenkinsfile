@@ -1,0 +1,10 @@
+podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-feature-branch',
+            label: 'test-open-tofu-github-pipeline-feature-branch-label', serviceAccount: 'jenkins-pipeline-sa-by-liangxu', 
+            containers: [containerTemplate(name:'jnlp', image:'jenkins/inbound-agent')]) {
+    node('test-open-tofu-github-pipeline-feature-branch-label') {
+        stage('Init'){
+            cleanWs()
+            checkout scm
+        }
+    }
+}
