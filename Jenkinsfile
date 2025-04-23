@@ -12,11 +12,12 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
             dockerExecute(
                 script: this,
                 dockerImage: 'ghcr.io/opentofu/opentofu:latest',
-                dockerWorkspace: './entitlement_subscription'
+                dockerName: 'open-tofu-docker'
             ) {
                 sh '''
                     pwd
                     ls -ltra
+                    cd entitlement_subscription
                     tofu init
                     tofu plan
                 '''
