@@ -11,17 +11,13 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                 pwd
                 ls -ltra
                 cat /etc/os-release
-                curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
-                chmod +x install-opentofu.sh
-                ./install-opentofu.sh --install-method deb
-                rm -f install-opentofu.sh
-                tofu -version
+                terraform -version
             """
         }
         stage('tofu-plan') {
             sh """
                 cd entitlement_subscription
-                tofu init
+                terraform init
             """
         }
     }
