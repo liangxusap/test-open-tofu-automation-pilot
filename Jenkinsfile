@@ -10,7 +10,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
         }
         stage('open tofu actions') {
             dockerExecute(
-                script: script,
+                script: this,
                 dockerImage: 'ghcr.io/opentofu/opentofu:latest',
                 dockerWorkspace: './entitlement_subscription'
             ) {
