@@ -26,8 +26,21 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             tofu init
                         """
                         TOFU_PLAN_EXITCODE = sh(script: 'tofu plan -detailed-exitcode', returnStatus: true)
+                        if (TOFU_PLAN_EXITCODE == 0) {
+                            sh """
+                                echo "TOFU_PLAN find no change, change in pull request is allowed to be applied to the infrastructure"
+                            """
+                        } else if (TOFU_PLAN_EXITCODE == 2) {
+                            sh """
+                                echo "TOFU PLAN identified changes on the infrastructure. First please review pipeline log to check differences"
+                            """
+                        } else {
+                            sh """
+                                echo "TOFU PLAN running into error, please double check the terraform *.tf files, or report to support team"
+                            """
+                        }
                     }
-                echo "tofu plan exitcode is : ${TOFU_PLAN_EXITCODE}"
+                // echo "tofu plan exitcode is : ${TOFU_PLAN_EXITCODE}"
             }
         }
     }
