@@ -25,7 +25,10 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             cd entitlement_subscription
                             tofu init
                         """
-                        TOFU_PLAN_EXITCODE = sh(script: 'cd ./entitlement_subscription&&tofu plan -detailed-exitcode', returnStatus: true)
+                        TOFU_PLAN_EXITCODE = sh(script: """
+                            cd ./entitlement_subscription
+                            tofu plan -detailed-exitcode""",
+                            returnStatus: true)                    
                         if (TOFU_PLAN_EXITCODE == 0) {
                             sh """
                                 echo "TOFU_PLAN find no change, change in pull request is allowed to be applied to the infrastructure"
@@ -34,17 +37,17 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                         } else if (TOFU_PLAN_EXITCODE == 2) {
                             sh """
                                 echo "TOFU PLAN identified changes on the infrastructure. First please review pipeline log to check differences"
-                                githubNotify status: 'PENDING', context: 'jenkins/pipeline'
                             """
+                            githubNotify status: 'PENDING', context: 'jenkins/pipeline'
                         } else {
                             sh """
                                 echo "TOFU PLAN running into error, please double check the terraform *.tf files, or report to support team"
-                                githubNotify status: 'FAILURE', context: 'jenkins/pipeline'
                             """
+                            githubNotify status: 'FAILURE', context: 'jenkins/pipeline'
                         }
                     }
-                // echo "tofu plan exitcode is : ${TOFU_PLAN_EXITCODE}"
             }
+                // echo "tofu plan exitcode is : ${TOFU_PLAN_EXITCODE}"
         }
     }
 }
