@@ -39,7 +39,12 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                     sh """
                         echo "TOFU PLAN identified changes on the infrastructure. First please review pipeline log to check differences"
                     """
-                    githubNotify (status: 'PENDING', context: 'jenkins/pipeline')
+                    githubNotify (status: 'PENDING',
+                                  repo: 'test-open-tofu-automation-pilot',
+                                  credentialsId: 'github-token-liangxusap' ,
+                                  account: 'liangxusap',
+                                //   sha: ,
+                                  context: 'jenkins/pipeline')
                 } else {
                     sh """
                         echo "TOFU PLAN running into error, please double check the terraform *.tf files, or report to support team"
