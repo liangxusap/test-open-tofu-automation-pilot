@@ -23,10 +23,12 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             ls -ltra
                             cd entitlement_subscription
                             tofu init
-                            tofu plan
-                            tofu apply -auto-approve
+                            tofu plan -detailed-exitcode
+                            export TOFU_PLAN_EXITCODE=$?
+
                         '''
                     }
+                    echo "tofu plan exitcode is : ${env.TOFU_PLAN_EXITCODE}"
             }
         }
     }
