@@ -41,7 +41,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                     """
                     githubNotify (status: 'PENDING',
                                   repo: 'test-open-tofu-automation-pilot',
-                                  credentialsId: 'github-token-liangxusap' ,
+                                  credentialsId: '2b423db1-4aef-4fe3-b073-b67e9803552e', //credential in jenkins
                                   account: 'liangxusap',
                                 //   sha: ,
                                   context: 'jenkins/pipeline')
