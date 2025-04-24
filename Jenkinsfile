@@ -24,6 +24,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             cd entitlement_subscription
                             tofu init
                             tofu plan
+                            tofu apply -auto-approve
                         '''
                     }
             }
