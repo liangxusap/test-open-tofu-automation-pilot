@@ -19,15 +19,14 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                     script: this,
                     dockerImage: 'ghcr.io/opentofu/opentofu:latest',
                     dockerName: 'open-tofu-docker') {
-                        sh '''
+                        sh """
                             pwd
                             ls -ltra
                             cd entitlement_subscription
                             tofu init
                             tofu plan -detailed-exitcode
-                            ${TOFU_PLAN_EXITCODE}=$?
-
-                        '''
+                            ${TOFU_PLAN_EXITCODE}=\$\?
+                        """
                     }
                     echo "tofu plan exitcode is : ${TOFU_PLAN_EXITCODE}"
             }
