@@ -1,6 +1,9 @@
 variable "subaccount_id" {
-    default = "YYY"
+    default = "24f92abe-7833-4e47-b374-ba70bf6221ba"
 }
 variable "user_name" {
-    default = "XXX"
+    default = "liang.xu04@sap.com"
+}
+variable "user_origin" {
+    default = "sap.default"
 }
