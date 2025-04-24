@@ -14,7 +14,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                 env.BTP_PASSWORD = CREDENTIAL_PASS
                 // echo "Username: ${env.BTP_USERNAME}"
                 // echo "Password: ${env.BTP_PASSWORD}"
-                env.TOFU_PLAN_EXITCODE = ''
+                env.TOFU_PLAN_EXITCODE = 0
                 dockerExecute(
                     script: this,
                     dockerImage: 'ghcr.io/opentofu/opentofu:latest',
@@ -28,7 +28,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             export TOFU_PLAN_EXITCODE=\$?
                         """
                     }
-                    println("tofu plan exitcode is : ${env.TOFU_PLAN_EXITCODE}")
+                println("tofu plan exitcode is : ${env.TOFU_PLAN_EXITCODE}")
             }
         }
     }
