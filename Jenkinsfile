@@ -12,8 +12,8 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
             withCredentials([usernamePassword(credentialsId: 'jenkins-secret-for-open-tofu', usernameVariable: 'CREDENTIAL_USER', passwordVariable: 'CREDENTIAL_PASS')]) {
                 env.BTP_USERNAME = CREDENTIAL_USER
                 env.BTP_PASSWORD = CREDENTIAL_PASS
-                echo "Username: ${env.BTP_USERNAME}"
-                echo "Password: ${env.BTP_PASSWORD}"
+                // echo "Username: ${env.BTP_USERNAME}"
+                // echo "Password: ${env.BTP_PASSWORD}"
                 dockerExecute(
                     script: this,
                     dockerImage: 'ghcr.io/opentofu/opentofu:latest',
@@ -22,9 +22,8 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             pwd
                             ls -ltra
                             cd entitlement_subscription
-                            echo $BTP_USERNAME
-                            echo $BTP_PASSWORD
                             tofu init
+                            tofu plan
                         '''
                     }
             }
