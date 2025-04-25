@@ -43,7 +43,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                                   repo: 'test-open-tofu-automation-pilot',
                                   credentialsId: 'jenkins-githubnotify-credential', //credential in jenkins
                                   account: 'liangxusap',
-                                //   sha: ,
+                                  sha: '141250c3ab1ec6ff9776f156b6bb28a7792ba510',
                                   context: 'jenkins/pipeline')
                 } else {
                     sh """
