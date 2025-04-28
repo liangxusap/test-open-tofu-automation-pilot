@@ -24,6 +24,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             ls -ltra
                             cd entitlement_subscription
                             tofu init
+                            az --help
                         """
                         TOFU_PLAN_EXITCODE = sh(script: """
                             cd ./entitlement_subscription
