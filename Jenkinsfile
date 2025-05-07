@@ -10,7 +10,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
         }
         stage('open tofu actions') {
             withCredentials([usernamePassword(credentialsId: 'jenkins-secret-for-open-tofu', usernameVariable: 'CREDENTIAL_USER', passwordVariable: 'CREDENTIAL_PASS'),
-                             string(credentialsId: 'azure_storage_account_token_open_tofu_backend', variable: 'ACCESS_KEY']) {
+                             string(credentialsId: 'azure_storage_account_token_open_tofu_backend', variable: 'ACCESS_KEY')]) {
                 env.BTP_USERNAME = CREDENTIAL_USER
                 env.BTP_PASSWORD = CREDENTIAL_PASS
                 // echo "Username: ${env.BTP_USERNAME}"
