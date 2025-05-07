@@ -55,6 +55,8 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                 }
             }
             // echo "tofu plan exitcode is : ${TOFU_PLAN_EXITCODE}"
+            echo "Username: ${env.BTP_USERNAME}"
+            echo "Password: ${env.BTP_PASSWORD}"            
         }
     }
 }
