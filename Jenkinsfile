@@ -9,11 +9,13 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
             setupCommonPipelineEnvironment script:this
         }
         stage('open tofu actions') {
-            withCredentials([usernamePassword(credentialsId: 'jenkins-secret-for-open-tofu', usernameVariable: 'CREDENTIAL_USER', passwordVariable: 'CREDENTIAL_PASS')]) {
+            withCredentials([usernamePassword(credentialsId: 'jenkins-secret-for-open-tofu', usernameVariable: 'CREDENTIAL_USER', passwordVariable: 'CREDENTIAL_PASS'),
+                             string(credentialsId: 'azure_storage_account_token_open_tofu_backend', variable: 'ACCESS_KEY']) {
                 env.BTP_USERNAME = CREDENTIAL_USER
                 env.BTP_PASSWORD = CREDENTIAL_PASS
                 // echo "Username: ${env.BTP_USERNAME}"
                 // echo "Password: ${env.BTP_PASSWORD}"
+                echo "ACCESS_TOKEN = ${ACCESS_KEY}"
                 TOFU_PLAN_EXITCODE = ''
                 dockerExecute(
                     script: this,
@@ -23,8 +25,10 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             pwd
                             ls -ltra
                             cd entitlement_subscription
+                            echo "ACCESS_TOKEN = ${ACCESS_KEY}"
+                            echo "ACCESS_TOKEN = \$ACCESS_KEY"
                             tofu init
-                            az --help
+                            sed -i "s/.*access_key.*=.*\".*\"/    access_key           = \"${ACCESS_KEY}\"/" main.tf
                         """
                         TOFU_PLAN_EXITCODE = sh(script: """
                             cd ./entitlement_subscription
