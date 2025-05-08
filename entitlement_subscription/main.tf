@@ -44,9 +44,7 @@ terraform {
   backend "azurerm" {
     resource_group_name  = "rg-cxp-shared"                               # Description: The Name of the Resource Group in which the Storage Account exists. (string)
     storage_account_name = "stacxpshared6vh6qk6onyi8"                    # Description: The Name of the Storage Account in which the Blob container is residing. (string)
-    subscription_id      = "86b0d4f8-1c81-4fd2-bbb1-75b952e7f48a"        # Description: The Azure subscription ID. (string)
     key                  = "test-state-file-by-liangxu.tfstate"                             # Description: The name of the Blob used to retrieve/store Terraform's State file inside the Storage Container. (string)
     container_name       = "terraform-state-test-by-liangxu"             # Action required. Description: The Name of the Storage Container within the Storage Account in which the Terraform state file will be stored. (string)
-    access_key           = "Dummy_value"
   }
 }
