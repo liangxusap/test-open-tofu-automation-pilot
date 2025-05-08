@@ -37,12 +37,12 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             echo ${env.BUILD_URL}
                             tofu init
                         """
-                        // TOFU_PLAN_EXITCODE = sh(script: """
-                        //     cd ./entitlement_subscription
-                        //     tofu plan -detailed-exitcode""",
-                        //     returnStatus: true)      
-                        TOFU_PLAN_EXITCODE = 2
-                        }
+                        TOFU_PLAN_EXITCODE = sh(script: """
+                            cd ./entitlement_subscription
+                            tofu plan -detailed-exitcode""",
+                            returnStatus: true)      
+                        // TOFU_PLAN_EXITCODE = 2
+                    }
                 if (TOFU_PLAN_EXITCODE == 0) {
                     sh """
                         echo "TOFU_PLAN find no change, change in pull request is allowed to be applied to the infrastructure"
