@@ -15,7 +15,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                 env.BTP_PASSWORD = CREDENTIAL_PASS
                 // echo "Username: ${env.BTP_USERNAME}"
                 // echo "Password: ${env.BTP_PASSWORD}"
-                echo "ACCESS_TOKEN = ${ACCESS_KEY}"
+                echo "ACCESS_KEY = ${ACCESS_KEY}"
                 TOFU_PLAN_EXITCODE = ''
                 dockerExecute(
                     script: this,
@@ -25,8 +25,8 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             pwd
                             ls -ltra
                             cd entitlement_subscription
-                            echo "ACCESS_TOKEN = ${ACCESS_KEY}"
-                            echo "ACCESS_TOKEN = \$ACCESS_KEY"
+                            echo "ACCESS_KEY = ${ACCESS_KEY}"
+                            echo "ACCESS_KEY = \$ACCESS_KEY"
                             cat main.tf | grep -i access_key
                             sed -i "s/.*access_key.*=.*\\".*\\"/    access_key           = \\"${ACCESS_KEY}\\"/" main.tf
                             cat main.tf | grep -i access_key
@@ -36,6 +36,8 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                         """
                         TOFU_PLAN_EXITCODE = sh(script: """
                             cd ./entitlement_subscription
+                            echo ${env.GIT_COMMIT}
+                            echo ${env.BUILD_URL}
                             tofu plan -detailed-exitcode""",
                             returnStatus: true)      
                         }              
