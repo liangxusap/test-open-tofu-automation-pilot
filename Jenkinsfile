@@ -10,12 +10,18 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
         }
         stage('open tofu actions') {
             withCredentials([usernamePassword(credentialsId: 'jenkins-secret-for-open-tofu', usernameVariable: 'CREDENTIAL_USER', passwordVariable: 'CREDENTIAL_PASS'),
-                             string(credentialsId: 'azure_storage_account_token_open_tofu_backend', variable: 'ACCESS_KEY')]) {
+                             usernamePassword(credentialsId: 'azure_storage_service_principal_open_tofu_backend', usernameVariable: 'servicePrincipalId', passwordVariable: 'servicePrincipalKey'),
+                             string(credentialsId: 'azure_storage_account_client_id_open_tofu_backend', variable: 'tenantId'),
+                             string(credentialsId: 'azure_storage_account_sub_id_open_tofu_backend', variable: 'Sub_ID')]) {
                 env.BTP_USERNAME = CREDENTIAL_USER
                 env.BTP_PASSWORD = CREDENTIAL_PASS
                 // echo "Username: ${env.BTP_USERNAME}"
                 // echo "Password: ${env.BTP_PASSWORD}"
-                echo "ACCESS_KEY = ${ACCESS_KEY}"
+                // echo "ACCESS_KEY = ${ACCESS_KEY}"
+                env.ARM_CLIENT_ID = servicePrincipalId
+                env.ARM_CLIENT_SECRET = servicePrincipalKey
+                env.ARM_TENANT_ID = tenantId
+                env.ARM_SUBSCRIPTION_ID = Sub_ID
                 TOFU_PLAN_EXITCODE = ''
                 dockerExecute(
                     script: this,
@@ -32,12 +38,13 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             cat main.tf | grep -i access_key
                             cat main.tf
                             ls -ltra
+                            echo ${env.GIT_COMMIT}
+                            echo ${env.BUILD_URL}
+                            echo \$(git rev-parse HEAD)
                             tofu init
                         """
                         TOFU_PLAN_EXITCODE = sh(script: """
                             cd ./entitlement_subscription
-                            echo ${env.GIT_COMMIT}
-                            echo ${env.BUILD_URL}
                             tofu plan -detailed-exitcode""",
                             returnStatus: true)      
                         }              
