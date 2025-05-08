@@ -17,7 +17,6 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                 env.BTP_PASSWORD = CREDENTIAL_PASS
                 // echo "Username: ${env.BTP_USERNAME}"
                 // echo "Password: ${env.BTP_PASSWORD}"
-                // echo "ACCESS_KEY = ${ACCESS_KEY}"
                 env.ARM_CLIENT_ID = servicePrincipalId
                 env.ARM_CLIENT_SECRET = servicePrincipalKey
                 env.ARM_TENANT_ID = tenantId
@@ -31,10 +30,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             pwd
                             ls -ltra
                             cd entitlement_subscription
-                            echo "ACCESS_KEY = ${ACCESS_KEY}"
-                            echo "ACCESS_KEY = \$ACCESS_KEY"
                             cat main.tf | grep -i access_key
-                            sed -i "s/.*access_key.*=.*\\".*\\"/    access_key           = \\"${ACCESS_KEY}\\"/" main.tf
                             cat main.tf | grep -i access_key
                             cat main.tf
                             ls -ltra
