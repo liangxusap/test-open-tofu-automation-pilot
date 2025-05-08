@@ -32,7 +32,6 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             pwd
                             ls -ltra
                             cd entitlement_subscription
-                            cat main.tf
                             ls -ltra
                             echo ${env.GIT_COMMIT}
                             echo ${env.BUILD_URL}
@@ -43,10 +42,6 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             tofu plan -detailed-exitcode""",
                             returnStatus: true)      
                         }
-                        // GIT_SHA = sh(script: """
-                        //     git rev-parse HEAD)              
-                        //     """)      
-                        // echo GIT_SHA
                 if (TOFU_PLAN_EXITCODE == 0) {
                     sh """
                         echo "TOFU_PLAN find no change, change in pull request is allowed to be applied to the infrastructure"
@@ -55,7 +50,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                                   repo: 'test-open-tofu-automation-pilot',
                                   credentialsId: 'jenkins-githubnotify-credential', //credential in jenkins
                                   account: 'liangxusap',
-                                  sha: '4e38f37bc5e51d125db19817bec6ff3f65a66115',
+                                  sha: prSha,
                                   context: 'jenkins/pipeline')
 
                 } else if (TOFU_PLAN_EXITCODE == 2) {
@@ -66,7 +61,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                                   repo: 'test-open-tofu-automation-pilot',
                                   credentialsId: 'jenkins-githubnotify-credential', //credential in jenkins
                                   account: 'liangxusap',
-                                  sha: '4e38f37bc5e51d125db19817bec6ff3f65a66115',
+                                  sha: prSha,
                                   context: 'jenkins/pipeline')
                 } else {
                     sh """
@@ -76,14 +71,14 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                                   repo: 'test-open-tofu-automation-pilot',
                                   credentialsId: 'jenkins-githubnotify-credential', //credential in jenkins
                                   account: 'liangxusap',
-                                  sha: '4e38f37bc5e51d125db19817bec6ff3f65a66115',
+                                  sha: prSha,
                                   context: 'jenkins/pipeline')
                         
                 }
             }
             // echo "tofu plan exitcode is : ${TOFU_PLAN_EXITCODE}"
-            echo "Username: ${env.BTP_USERNAME}"
-            echo "Password: ${env.BTP_PASSWORD}"            
+            // echo "Username: ${env.BTP_USERNAME}"
+            // echo "Password: ${env.BTP_PASSWORD}"            
         }
     }
 }
