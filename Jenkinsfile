@@ -34,6 +34,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             ls -ltra
                             echo ${env.GIT_COMMIT}
                             echo ${env.BUILD_URL}
+                            git rev-parse HEAD
                             tofu init
                         """
                         TOFU_PLAN_EXITCODE = sh(script: """
@@ -41,10 +42,10 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             tofu plan -detailed-exitcode""",
                             returnStatus: true)      
                         }
-                        GIT_SHA = sh(script: """
-                            git rev-parse HEAD)              
-                            """)      
-                        echo GIT_SHA
+                        // GIT_SHA = sh(script: """
+                        //     git rev-parse HEAD)              
+                        //     """)      
+                        // echo GIT_SHA
                 if (TOFU_PLAN_EXITCODE == 0) {
                     sh """
                         echo "TOFU_PLAN find no change, change in pull request is allowed to be applied to the infrastructure"
