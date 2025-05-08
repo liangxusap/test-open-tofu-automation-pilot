@@ -51,7 +51,6 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                         GIT_SHA = sh(script: """
                             git rev-parse HEAD)              
                             """)      
-                        }
                         echo GIT_SHA
                 if (TOFU_PLAN_EXITCODE == 0) {
                     sh """
