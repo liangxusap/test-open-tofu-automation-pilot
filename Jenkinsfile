@@ -28,8 +28,8 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             echo "ACCESS_TOKEN = ${ACCESS_KEY}"
                             echo "ACCESS_TOKEN = \$ACCESS_KEY"
                             cat main.tf | grep -i access_key
-                            tofu init
                             sed -i "s/.*access_key.*=.*\".*\"/    access_key           = \"${ACCESS_KEY}\"/" main.tf
+                            tofu init
                             cat main.tf | grep -i access_key
                         """
                         TOFU_PLAN_EXITCODE = sh(script: """
