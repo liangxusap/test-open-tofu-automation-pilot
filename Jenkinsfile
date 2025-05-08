@@ -37,10 +37,11 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             echo ${env.BUILD_URL}
                             tofu init
                         """
-                        TOFU_PLAN_EXITCODE = sh(script: """
-                            cd ./entitlement_subscription
-                            tofu plan -detailed-exitcode""",
-                            returnStatus: true)      
+                        // TOFU_PLAN_EXITCODE = sh(script: """
+                        //     cd ./entitlement_subscription
+                        //     tofu plan -detailed-exitcode""",
+                        //     returnStatus: true)      
+                        TOFU_PLAN_EXITCODE = 1
                         }
                 if (TOFU_PLAN_EXITCODE == 0) {
                     sh """
