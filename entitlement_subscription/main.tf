@@ -40,3 +40,11 @@ resource "btp_subaccount_role_collection_assignment" "AUTOMATION_PILOT_DEVELOPER
   origin               = "sap.default"
   depends_on    = [btp_subaccount_subscription.AUTOMATION_PILOT_TRIAL_SUBSCRIPTION]
 }
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-cxp-shared"                               # Description: The Name of the Resource Group in which the Storage Account exists. (string)
+    storage_account_name = "stacxpshared6vh6qk6onyi8"                    # Description: The Name of the Storage Account in which the Blob container is residing. (string)
+    key                  = "test-state-file-by-liangxu.tfstate"                             # Description: The name of the Blob used to retrieve/store Terraform's State file inside the Storage Container. (string)
+    container_name       = "terraform-state-test-by-liangxu"             # Action required. Description: The Name of the Storage Container within the Storage Account in which the Terraform state file will be stored. (string)
+  }
+}

@@ -1,0 +1,15 @@
+general:
+  buildTool: 'docker'
+  containerRegistryUrl: https://docker.io/
+  # verbose: true
+  containerImageName: liangxu2023/product-list-kyma
+steps:
+  kanikoExecute:
+    verbose: true
+    dockerConfigJSON: dockerConfigJsonCredentialsId
+    dockerConfigJsonCredentialsId: dockerhubliangxucredential
+    containerMultiImageBuild: true
+    containerImageTag: "latest"
+    containerMultiImageBuildTrimDir: product-list-app-source-code
+    buildOptions:
+      - '--skip-tls-verify-pull'
