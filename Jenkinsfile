@@ -41,7 +41,7 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                         //     cd ./entitlement_subscription
                         //     tofu plan -detailed-exitcode""",
                         //     returnStatus: true)      
-                        TOFU_PLAN_EXITCODE = 1
+                        TOFU_PLAN_EXITCODE = 2
                         }
                 if (TOFU_PLAN_EXITCODE == 0) {
                     sh """
