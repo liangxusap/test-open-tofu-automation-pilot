@@ -5,7 +5,9 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
     node('test-open-tofu-github-pipeline-feature-branch-label') {
         stage('Init'){
             cleanWs()
-            checkout scm
+            scmVars = checkout scm
+            prSha = scmVars.GIT_COMMIT
+            echo "Pull Request SHA: ${prSha}"
             setupCommonPipelineEnvironment script:this
         }
         stage('open tofu actions') {
@@ -34,9 +36,6 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             ls -ltra
                             echo ${env.GIT_COMMIT}
                             echo ${env.BUILD_URL}
-                            cd ..
-                            ls -ltra
-                            git rev-parse HEAD
                             tofu init
                         """
                         TOFU_PLAN_EXITCODE = sh(script: """
