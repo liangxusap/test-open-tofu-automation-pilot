@@ -34,6 +34,8 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             ls -ltra
                             echo ${env.GIT_COMMIT}
                             echo ${env.BUILD_URL}
+                            cd ..
+                            ls -ltra
                             git rev-parse HEAD
                             tofu init
                         """
