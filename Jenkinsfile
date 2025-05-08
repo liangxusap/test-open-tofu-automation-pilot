@@ -30,13 +30,10 @@ podTemplate(cloud: 'kubenetes-internal', name: 'test-open-tofu-github-pipeline-f
                             pwd
                             ls -ltra
                             cd entitlement_subscription
-                            cat main.tf | grep -i access_key
-                            cat main.tf | grep -i access_key
                             cat main.tf
                             ls -ltra
                             echo ${env.GIT_COMMIT}
                             echo ${env.BUILD_URL}
-
                             tofu init
                         """
                         TOFU_PLAN_EXITCODE = sh(script: """
